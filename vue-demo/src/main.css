@@ -1,0 +1,15 @@
+.basic{
+    color: skyblue;
+}
+
+.type1{
+    background-color: orange;
+}
+
+.type2{
+    border: 3px solid #ccc
+}
+
+.type3{
+    font-size: 30px;
+}
