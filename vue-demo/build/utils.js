@@ -91,6 +91,7 @@ exports.createNotifierCallback = () => {
     const error = errors[0]
     const filename = error.file && error.file.split('!').pop()
 
+    console.log(error)
     notifier.notify({
       title: packageConfig.name,
       message: severity + ': ' + error.name,

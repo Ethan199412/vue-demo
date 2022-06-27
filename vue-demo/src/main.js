@@ -1,11 +1,15 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+// import VueComponent
 import App from './App'
 import router from './router'
 import './main.css'
 
 Vue.config.productionTip = false
+window.Vue = Vue
+// window.VueComponent = VueComponent
+// throw Error()
 // Vue.config.devtools = false
 
 /* eslint-disable no-new */
@@ -37,10 +41,12 @@ const School = Vue.extend({
   },
   methods: {
     handleClick() {
+      console.log('[p0.1] this', this)
       this.name += 'hehe'
+      window.instance = this
     }
   },
-  components:{
+  components: {
     Student
   },
   template: `<div>
@@ -51,7 +57,8 @@ const School = Vue.extend({
   </div>`
 })
 
-console.log('[p0]',typeof School, new School())
+console.log('[p0]', typeof School, new School())
+window.School = School
 
 window.vm = new Vue({
   el: '#app',
