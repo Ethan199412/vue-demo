@@ -7,58 +7,6 @@ import router from './router'
 import './main.css'
 
 Vue.config.productionTip = false
-window.Vue = Vue
-// window.VueComponent = VueComponent
-// throw Error()
-// Vue.config.devtools = false
-
-/* eslint-disable no-new */
-const Student = Vue.extend({
-  data() {
-    return {
-      name: 'ethan',
-      age: 13
-    }
-  },
-  methods: {
-    changeAge() {
-      this.age += 1
-    }
-  },
-  template: `<div>
-    <div>{{name}}</div>
-    <div>{{age}}</div>
-    <button @click='changeAge'>点我</button>
-  </div>`
-})
-
-const School = Vue.extend({
-  data() {
-    return {
-      name: '华中科技大学',
-      address: '武汉'
-    }
-  },
-  methods: {
-    handleClick() {
-      console.log('[p0.1] this', this)
-      this.name += 'hehe'
-      window.instance = this
-    }
-  },
-  components: {
-    Student
-  },
-  template: `<div>
-  <div>{{name}}</div>
-  <div>{{address}}</div>
-  <button @click="handleClick">点我</button>
-  <Student/>
-  </div>`
-})
-
-console.log('[p0]', typeof School, new School())
-window.School = School
 
 window.vm = new Vue({
   el: '#app',
@@ -89,91 +37,13 @@ window.vm = new Vue({
   //   <div v-html='innerText'></div>
   // </div>`,
   components: {
-    School
+    App
   },
   data: {
-    number: 1,
-    firstName: 'Ethan',
-    lastName: 'Lee',
-    style: ['type1', 'type2', 'type3'],
-    cars: [
-      { name: '奥迪a8', color: 'silver', price: 900000, id: 4 },
-      { name: '奥迪a6', color: 'black', price: 700000, id: 1 },
-      { name: '桑塔纳', color: 'red', price: 200000, id: 2 },
-      { name: '马自达', color: 'silver', price: 500000, id: 3 },
-    ],
-    searchedWords: '',
-    sort: false,
-    colors: ['red', 'green', 'blue'],
-    innerText: '<h1>haha</h1>'
+
   },
-  beforeCreate() { // 指的是绑定关系，虚拟 dom 和正式 dom 的绑定关系
-    console.log('before create', this)
-  },
-  methods: {
-    handleClick() {
-      this.number += 1
-      console.log(this)
-    },
-    handleSort() {
-      // this.searchedCars.sort((a, b) => a.price - b.price)
-      // console.log(this.searchedCars)
-      this.sort = !this.sort
-    }
-    ,
-    combine() {
-      const { firstName, lastName } = this
-      return firstName + '-' + lastName
-    },
-    handleChangeStyle() {
-      if (this.style.length > 0) {
-        this.style.pop()
-      }
-    },
-    handleDelete() {
-      this.cars.splice(1, 1)
-      console.log(this.cars)
-    },
-    handleAdd() {
-      this.cars.unshift({ name: '劳斯莱斯', color: 'silver', price: '1000000', id: Math.random() })
-    },
-    handleChangePrice() {
-      this.cars[0].price -= 100000
-    },
-    handleChangeColor() {
-      this.colors[0] = 'orange'
-      this.colors = [...this.colors]
-    },
-    bye() {
-      this.$destroy()
-      console.log('bye')
-    }
-  },
-  computed: {
-    fullName: {
-      get() {
-        console.log('get called')
-        const { firstName, lastName } = this
-        return firstName + '-' + lastName
-      }
-    },
-    searchedCars() {
-      // if(!this.searchedWords){
-      //   return this.cars
-      // }
-      const arr = this.cars.filter(e => e.name.includes(this.searchedWords))
-      if (this.sort) {
-        return arr.sort((a, b) => a.price - b.price)
-      }
-      return arr
-    }
-  },
-  watch: {
-    lastName: {
-      handler(newValue, oldValue) {
-        console.log({ oldValue, newValue })
-      }
-    }
-  }
+  template:`
+   <App/>
+  `
 })
 
