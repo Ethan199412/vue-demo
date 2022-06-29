@@ -3,7 +3,7 @@
 import Vue from 'vue'
 // import VueComponent
 import App from './App'
-import './main.css'
+import './main.less'
 
 Vue.config.productionTip = false
 
