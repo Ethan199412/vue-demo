@@ -1,89 +1,46 @@
 <template>
   <div id="app">
-    <ToDoInput :addCallback="addList" />
-    <ToDoList
-      :toDoList="toDoList"
-      :handleCheckByIndex="handleCheckByIndex"
-      :deleteOne="deleteOne"
-      :editOne="editOne"
-      :updateItem="updateItem"
-    />
-    <ToDoFooter
-      :handleDeleteFinished="handleDeleteFinished"
-      :handleCheckAll="handleCheckAll"
-      :toDoList="toDoList"
-    />
+    <SearchHeader />
+    <div class='flex-wrap'>
+      <User v-for="(e) in infoList" :key="e.id" :info="e"/>
+    </div>
   </div>
 </template>
 
 <script>
-import ToDoList from "./components/ToDoList.vue";
-import ToDoInput from "./components/ToDoInput.vue";
-import ToDoFooter from "./components/ToDoFooter.vue";
+import Request from "./request/request.js";
+import SearchHeader from "./components/SearchHeader.vue";
+import User from './components/User.vue'
 
 export default {
   name: "App",
-  components: {
-    ToDoList,
-    ToDoInput,
-    ToDoFooter,
-  },
+
   data() {
     return {
-      toDoList: JSON.parse(localStorage.getItem("toDoList")) || [],
+      infoList: [],
     };
   },
+  components: {
+    SearchHeader,
+    User
+  },
   methods: {
-    addList(newAction) {
-      console.log("[p0] addList", newAction);
-      this.toDoList.unshift(newAction);
-    },
-    handleCheckByIndex(index) {
-      this.toDoList[index].done = !this.toDoList[index].done;
-    },
-    handleDeleteFinished() {
-      const res = [];
-      for (let e of this.toDoList) {
-        if (!e.done) {
-          res.push(e);
-        }
-      }
-      console.log("[p0.4]", res);
-      this.toDoList = res;
-    },
-    deleteOne(index) {
-      this.toDoList.splice(index, 1);
-      console.log("[p0.5]", { index, toDoList: this.toDoList });
-    },
-    handleCheckAll(value) {
-      console.log("[p0.5] value", value);
-      this.toDoList.forEach((e) => {
-        e.done = value;
+    search(query) {
+      Request.getUsers(query).then((res) => {
+        console.log("[p0] res", res);
+        this.infoList = res.data.items
       });
     },
-    editOne(index, value){
-      this.toDoList[index].isEdit = value
-      this.toDoList = [...this.toDoList]
-    },
-    updateItem(index, value){
-      console.log('[p0.7]',value)
-      this.toDoList[index].action = value
-      //this.toDoList = [...this.toDoList]
-    }
   },
-  watch: {
-    deep: true,
-    toDoList: {
-      handler(value) {
-        console.log("[p0.6] value", value);
-        localStorage.setItem("toDoList", JSON.stringify(value));
-      },
-      deep: true,
-    },
+  mounted() {
+    this.$bus.$on("search", this.search);
   },
-  computed: {},
 };
 </script>
 
 <style lang='less'>
+  .flex-wrap{
+    display: flex;
+    flex-wrap: wrap;
+  }
 </style>
