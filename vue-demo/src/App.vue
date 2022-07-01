@@ -5,6 +5,8 @@
       :toDoList="toDoList"
       :handleCheckByIndex="handleCheckByIndex"
       :deleteOne="deleteOne"
+      :editOne="editOne"
+      :updateItem="updateItem"
     />
     <ToDoFooter
       :handleDeleteFinished="handleDeleteFinished"
@@ -59,6 +61,15 @@ export default {
         e.done = value;
       });
     },
+    editOne(index, value){
+      this.toDoList[index].isEdit = value
+      this.toDoList = [...this.toDoList]
+    },
+    updateItem(index, value){
+      console.log('[p0.7]',value)
+      this.toDoList[index].action = value
+      //this.toDoList = [...this.toDoList]
+    }
   },
   watch: {
     deep: true,
